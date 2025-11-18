@@ -9,7 +9,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <select
             value={filters.gov}
             onChange={(e) => onChange({ ...filters, gov: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All</option>
             {['Tunis','Ariana','Ben Arous','Manouba','Bizerte','Nabeul','Zaghouan','Béja','Jendouba','Kef','Siliana','Sousse','Monastir','Mahdia','Sfax','Kairouan','Kasserine','Sidi Bouzid','Gabès','Medenine','Tataouine','Gafsa','Tozeur','Kebili'].map(g => (
@@ -22,7 +22,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <input
             value={filters.city}
             onChange={(e) => onChange({ ...filters, city: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g. La Marsa"
           />
         </div>
@@ -34,7 +34,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <input type="number" min="0"
             value={filters.minPrice}
             onChange={(e) => onChange({ ...filters, minPrice: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="0"
           />
         </div>
@@ -43,7 +43,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <input type="number" min="0"
             value={filters.maxPrice}
             onChange={(e) => onChange({ ...filters, maxPrice: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="200000"
           />
         </div>
@@ -55,7 +55,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <input type="number" min="0"
             value={filters.minArea}
             onChange={(e) => onChange({ ...filters, minArea: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="100"
           />
         </div>
@@ -64,7 +64,7 @@ function LandFilters({ filters, onChange, onSearch }) {
           <input type="number" min="0"
             value={filters.maxArea}
             onChange={(e) => onChange({ ...filters, maxArea: e.target.value })}
-            className="w-full bg-slate-800/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-900/70 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="1000"
           />
         </div>

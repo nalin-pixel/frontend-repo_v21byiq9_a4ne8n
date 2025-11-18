@@ -5,15 +5,16 @@ import PropertyCard from './components/PropertyCard'
 import MapPanel from './components/MapPanel'
 
 const MOCK = [
-  { id: 1, title: 'Sea-view plot in La Marsa', gov: 'Tunis', city: 'La Marsa', price: 380000, area: 420, lat: 36.8762, lng: 10.3253 },
-  { id: 2, title: 'Olive farm near Sfax', gov: 'Sfax', city: 'Sakiet Ezzit', price: 190000, area: 5000, lat: 34.7394, lng: 10.7603 },
-  { id: 3, title: 'Desert land in Douz', gov: 'Kebili', city: 'Douz', price: 60000, area: 10000, lat: 33.4591, lng: 9.0222 },
-  { id: 4, title: 'Build-ready lot in Hammamet', gov: 'Nabeul', city: 'Hammamet', price: 220000, area: 300, lat: 36.4073, lng: 10.6223 },
+  { id: 1, title: 'Sea-view plot in La Marsa', gov: 'Tunis', city: 'La Marsa', price: 380000, area: 420, lat: 36.8762, lng: 10.3253, image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop' },
+  { id: 2, title: 'Olive farm near Sfax', gov: 'Sfax', city: 'Sakiet Ezzit', price: 190000, area: 5000, lat: 34.7394, lng: 10.7603, image: 'https://images.unsplash.com/photo-1472220625704-91e1462799b2?q=80&w=1200&auto=format&fit=crop' },
+  { id: 3, title: 'Desert land in Douz', gov: 'Kebili', city: 'Douz', price: 60000, area: 10000, lat: 33.4591, lng: 9.0222, image: 'https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?q=80&w=1200&auto=format&fit=crop' },
+  { id: 4, title: 'Build-ready lot in Hammamet', gov: 'Nabeul', city: 'Hammamet', price: 220000, area: 300, lat: 36.4073, lng: 10.6223, image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1200&auto=format&fit=crop' },
 ]
 
 function App() {
   const [filters, setFilters] = useState({ gov: '', city: '', minPrice: '', maxPrice: '', minArea: '', maxArea: '' })
   const [searchKey, setSearchKey] = useState(0)
+  const [savedIds, setSavedIds] = useState(new Set())
 
   const filtered = useMemo(() => {
     return MOCK.filter(i => (
@@ -26,41 +27,56 @@ function App() {
     ))
   }, [filters, searchKey])
 
+  const toggleSave = (id) => {
+    setSavedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
+
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen relative text-white">
+      {/* Fullscreen map in background */}
+      <MapPanel />
+
+      {/* Top bar */}
       <HeaderBar />
-      <main className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left: Property list and filters */}
-        <section className="space-y-4">
-          <div className="bg-slate-800/60 border border-white/10 rounded-xl p-4">
-            <h2 className="text-lg font-semibold mb-3">Filters</h2>
-            <LandFilters
-              filters={filters}
-              onChange={setFilters}
-              onSearch={() => setSearchKey(k => k + 1)}
+
+      {/* Left side menu / drawer */}
+      <aside className="fixed top-16 left-0 bottom-0 z-20 w-full sm:w-[380px] md:w-[420px] bg-slate-950/70 backdrop-blur border-r border-white/10 p-4 overflow-y-auto">
+        <div className="mb-4">
+          <h2 className="text-sm font-semibold text-white">Search</h2>
+          <p className="text-xs text-blue-200/70">Filter by location, price and size</p>
+        </div>
+        <div className="mb-4">
+          <LandFilters
+            filters={filters}
+            onChange={setFilters}
+            onSearch={() => setSearchKey(k => k + 1)}
+          />
+        </div>
+
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-semibold">Results</h3>
+          <span className="text-xs text-blue-300">{filtered.length} found</span>
+        </div>
+        <div className="grid grid-cols-1 gap-3">
+          {filtered.map(item => (
+            <PropertyCard
+              key={item.id}
+              item={item}
+              onToggleSave={toggleSave}
+              saved={savedIds.has(item.id)}
             />
-          </div>
-
-          <div className="bg-slate-800/60 border border-white/10 rounded-xl p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-semibold">Results</h2>
-              <span className="text-blue-300 text-sm">{filtered.length} found</span>
-            </div>
-            <div className="space-y-3">
-              {filtered.map(item => (
-                <PropertyCard key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Right: Map */}
-        <section className="h-[70vh] lg:h-[calc(100vh-140px)]">
-          <MapPanel query={filters} />
-        </section>
-      </main>
+          ))}
+        </div>
+      </aside>
     </div>
-  )
-}
+  )}
 
 export default App
